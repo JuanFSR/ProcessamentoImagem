@@ -9,17 +9,15 @@ imagemDouble = im2double(imgEntrada);
 ##Montando um filtro de média 9X9
 filtroMedia = ones(9,9)/81;
 
-##Adicionando padding de zeros
+##Replica a borda da imagem de entrada
 imgPaddingReplicado = padarray(imagemDouble, [4,4], 'replicate');
 
-##Usar filter2(b, x, shape) para aplicar o filtro de média
+##Aplicando filtro de média na imagem com a borda replicada
+imgPaddingReplicado = filter2(filtroMedia, imgPaddingReplicado, 'valid'); 
+
+##Aplicando filtro de média e adicionando padding de zeros
 filtroAplicado = padarray(imagemDouble, [4,4], 0);
-filtroAplicado = filter2(filtroMedia, imagemDouble, 'same');
-
-
-##Replicando a borda da imagem
-replicandoBorda = filter2(filtroMedia, imgPaddingReplicado, 'valid'); 
-
+imgPaddingZeros = filter2(filtroMedia, imagemDouble, 'same');
 
 ##Criando os filtros de Sobel
 primeiroFiltroSobel = [-1,-2,-1; 0,0,0; 1,2,1];
@@ -39,24 +37,27 @@ filtroSobelAplicadoVertical = abs(filtroSobelAplicadoVertical);
 #Calculando a magnitude do gradiente
 magnitudeGradiente = filtroSobelAplicadoHorizontal+filtroSobelAplicadoVertical;
 
-##A borda fico mais escura já que antes de realizar a aplicação do filtro, nós adicinamos 4 linhas e 4 colunas de zeros, criando assim uma pequena borda preta após apicar o filtro de média
-##Exibir a imagem resultante adicionando um padding de zeros
-##figure(1);
+#Cria as novas imagens após aplicar os filtros requisitados
+imwrite(imgPaddingZeros, "imagPaddingZeros.jpg");
+imwrite(imgPaddingReplicado, "imagBordaReplicada.jpg");
+imwrite(magnitudeGradiente, "imagFiltroSobel.jpg");
+
+
+##A borda fico mais escura já que antes de realizar a aplicação do filtro, nós adicionamos 4 linhas e 4 colunas de zeros, criando assim uma pequena borda preta após apicar o filtro de média
+##Exibe a imagem resultante após aplicar o padding de zeros e o filtro de média
 subplot(1, 3, 1)
-imshow(filtroAplicado);
+imshow("imagPaddingZeros.jpg");
 title('Imagem com padding de Zeros');
 
 ##Exibe a imagem resultante replicando as bordas
-##figure(2);
 subplot(1, 3, 2)
-imshow(replicandoBorda); 
+imshow("imagBordaReplicada.jpg"); 
 title('Imagem replicando a borda');
 
 ##Exibe a imagem aplicando o filtro de Sobel
-##figure(3);
 subplot(1, 3, 3)
-imshow(magnitudeGradiente);
-title('Imagem usando os filitros de Sobel');
+imshow("imagFiltroSobel.jpg");
+title('Imagem usando os filtros de Sobel');
 
 
 
