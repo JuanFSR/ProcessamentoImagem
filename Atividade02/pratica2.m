@@ -43,7 +43,7 @@ imwrite(imgPaddingReplicado, "imagBordaReplicada.jpg");
 imwrite(magnitudeGradiente, "imagFiltroSobel.jpg");
 
 
-##A borda fico mais escura já que antes de realizar a aplicação do filtro, nós adicionamos 4 linhas e 4 colunas de zeros, criando assim uma pequena borda preta após apicar o filtro de média
+##A borda fico mais escura já que antes de realizar a aplicação do filtro, nós adicionamos 4 linhas e 4 colunas de zeros (preto), criando assim uma pequena borda preta após apicar o filtro de média
 ##Exibe a imagem resultante após aplicar o padding de zeros e o filtro de média
 subplot(1, 3, 1)
 imshow("imagPaddingZeros.jpg");
