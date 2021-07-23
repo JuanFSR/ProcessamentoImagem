@@ -24,11 +24,11 @@ primeiroFiltroSobel = [-1,-2,-1; 0,0,0; 1,2,1];
 segundoFiltroSobel = [-1,0,1; -2,0,2; -1,0,1]
 
 ##Adicionando padding de 1 linha e 1 coluna na imagem
-sobelPadding = padarray(imagemDouble, [1,1], 0);
+sobelPadding = padarray(imagemDouble, [1,1], 'replicate');
 
 ##Aplicando filtros de Sobel na imagem
-filtroSobelAplicadoHorizontal = filter2(primeiroFiltroSobel, imagemDouble, 'same');
-filtroSobelAplicadoVertical = filter2(segundoFiltroSobel, imagemDouble, 'same');
+filtroSobelAplicadoHorizontal = filter2(primeiroFiltroSobel, sobelPadding, 'valid');
+filtroSobelAplicadoVertical = filter2(segundoFiltroSobel, sobelPadding, 'valid');
 
 ##Aplicando a operação de modulo nos valores encontrados aplicando os filtros de Sobel
 filtroSobelAplicadoHorizontal = abs(filtroSobelAplicadoHorizontal);
